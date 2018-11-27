@@ -102,6 +102,37 @@ testapptwo-service services are used in the Endpoints
       ports:
       - port: 80
 
+Once all the manifests are applied, the nginxingress-service EXTERNAL-IP can be
+updated in public DNS or the hosts file and tested for http:
+
+    [jcastillo2nd@thor kubernetes-examples]$ curl http://test.do-testing.com/app1
+    <html>
+    <head><title>Test App One</title></head>
+    <body><h1>Test App One!</h1><p>This is test app one</p></body></html>
+    [jcastillo2nd@thor kubernetes-examples]$ curl http://test.do-testing.com/app2
+    <html>
+    <head><title>Test App Two</title></head>
+    <body><h1>Test App Two!</h1><p>This is test app two</p></body></html>
+    [jcastillo2nd@thor kubernetes-examples]$ curl http://api.test.do-testing.com/
+    <html>
+    <head><title>API Service</title></head>
+    <body><h1>Test API Service!</h1><p>This is test app for an API</p></body></html>
+
+And for TLS ( using -k to skip certificate check ):
+
+    [jcastillo2nd@thor kubernetes-examples]$ curl -k https://test.do-testing.com/app1
+    <html>
+    <head><title>Test App One</title></head>
+    <body><h1>Test App One!</h1><p>This is test app one</p></body></html>
+    [jcastillo2nd@thor kubernetes-examples]$ curl -k https://test.do-testing.com/app2
+    <html>
+    <head><title>Test App Two</title></head>
+    <body><h1>Test App Two!</h1><p>This is test app two</p></body></html>
+    [jcastillo2nd@thor kubernetes-examples]$ curl -k https://api.test.do-testing.com/
+    <html>
+    <head><title>API Service</title></head>
+    <body><h1>Test API Service!</h1><p>This is test app for an API</p></body></html>
+
 
 [1]: https://github.com/nginxinc/kubernetes-ingress/blob/release-1.4/internal/nginx/nginx.go#L182
 [2]: https://github.com/nginxinc/kubernetes-ingress/blob/master/docs/configmap-and-annotations.md#summary-of-configmap-and-annotations
