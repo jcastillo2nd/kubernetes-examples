@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: testappone-service
+  namespace: testappone-namespace
+spec:
+  selector:
+    app: testappone
+  ports:
+  - protocol: TCP
+    port: 80

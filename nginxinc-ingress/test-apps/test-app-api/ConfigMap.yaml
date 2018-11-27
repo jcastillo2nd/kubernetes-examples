@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testappapi-configmap
+  namespace: testappapi-namespace
+data:
+  index.html: |
+    <html>
+    <head><title>API Service</title></head>
+    <body><h1>Test API Service!</h1><p>This is test app for an API</p></body></html>

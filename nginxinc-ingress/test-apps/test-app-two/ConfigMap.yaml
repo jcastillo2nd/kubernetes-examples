@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testapptwo-configmap
+  namespace: testapptwo-namespace
+data:
+  index.html: |
+    <html>
+    <head><title>Test App Two</title></head>
+    <body><h1>Test App Two!</h1><p>This is test app two</p></body></html>

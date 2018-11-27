@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginxingress-deployment
+  namespace: nginxingress-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginxingress-deployment-pod
+  template:
+    metadata:
+      namespace: nginxingress-namespace
+      labels:
+        app: nginxingress-deployment-pod
+    spec:
+      serviceAccountName: nginxingress-serviceaccount
+      containers:
+      - image: nginx/nginx-ingress:alpine
+        name: nginxingress-deployment-pod
+        ports:
+        - name: http
+          containerPort: 80
+        - name: https
+          containerPort: 443
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        args:
+          - -nginx-configmaps=$(POD_NAMESPACE)/nginxingress-configmap
+          - -default-server-tls-secret=$(POD_NAMESPACE)/nginxingress-test-tls-secret
+         #- -v=3 # Enables extensive logging. Useful for trooublshooting.
+         #- -report-ingress-status
+         #- -external-service=nginx-ingress
+         #- -enable-leader-election

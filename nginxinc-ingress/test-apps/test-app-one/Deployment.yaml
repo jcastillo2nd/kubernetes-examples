@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testappone-deployment
+  namespace: testappone-namespace
+  labels:
+    app: testappone-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: testappone
+  template:
+    metadata:
+      namespace: testappone-namespace
+      labels:
+        app: testappone
+    spec:
+      containers:
+      - name: testappone
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: testappone-index
+          mountPath: /usr/share/nginx/html
+        - name: testappone-my-headers-config
+          mountPath: /etc/nginx/conf.d/my-headers.conf
+          subPath: "my-headers.conf"
+      volumes:
+      - name: testappone-index
+        configMap:
+          name: testappone-configmap
+          items:
+          - key: index.html
+            path: index.html
+      - name: testappone-my-headers-config
+        configMap:
+          name: testappone-configmap

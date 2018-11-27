@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: testapptwo-service
+  namespace: testapptwo-namespace
+spec:
+  selector:
+    app: testapptwo
+  ports:
+  - protocol: TCP
+    port: 80

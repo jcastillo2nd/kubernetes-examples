@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testappone-configmap
+  namespace: testappone-namespace
+data:
+  index.html: |
+    <html>
+    <head><title>Test App One</title></head>
+    <body><h1>Test App One!</h1><p>This is test app one</p></body></html>
+  my-headers.conf: |
+    server {
+        listen       80 default_server;
+        server_name  localhost;
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+        location /my-headers.html {
+            root /usr/share/nginx/html;
+            add_header Content-Type text/html;
+            return 200 '
+            <html>
+            <head><title>Headers</title></head>
+            <body>
+            <ul>
+            <li>x-forwarded-for: $http_x_forwarded_for</li>
+            <li>x-forwarded-proto: $http_x_forwarded_proto</li>
+            <li>x-forwarded-port: $http_x_forwarded_port</li>
+            <li>x-real-ip: $http_x_real_ip</li>
+            <li>remote_addr: $remote_addr</li>
+            </ul>
+            <body>
+            </html>
+            ';
+        }
+    }

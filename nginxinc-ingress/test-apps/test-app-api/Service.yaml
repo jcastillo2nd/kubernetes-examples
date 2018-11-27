@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: testappapi-service
+  namespace: testappapi-namespace
+spec:
+  selector:
+    app: testappapi
+  ports:
+  - protocol: TCP
+    port: 80

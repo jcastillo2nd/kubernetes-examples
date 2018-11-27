@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginxingress-ingress
+  namespace: nginxingress-namespace
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.org/rewrites: "serviceName=test-app-two-service rewrite=/;serviceName=test-app-one-service rewrite=/"
+spec:
+  tls:
+    - hosts:
+      - test.do-testing.com
+      secretName: nginxingress-test-tls-secret
+    - hosts:
+      - api.test.do-testing.com
+      secretName: nginxingress-api-test-tls-secret
+  rules:
+  - host: test.do-testing.com
+    http:
+      paths:
+      - path: /app1
+        backend:
+          serviceName: test-app-one-service
+          servicePort: 80
+      - path: /app2
+        backend:
+          serviceName: test-app-two-service
+          servicePort: 80
+  - host: api.test.do-testing.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: test-app-api-service
+          servicePort: 80
