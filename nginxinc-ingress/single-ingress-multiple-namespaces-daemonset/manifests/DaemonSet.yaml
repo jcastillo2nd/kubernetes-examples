@@ -1,23 +1,23 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1
+kind: DaemonSet
 metadata:
-  name: nginxingress-deployment
+  name: nginxingress-daemonset
   namespace: nginxingress-namespace
 spec:
-  replicas: 3 # Generally not a good idea to be more than number of nodes
   selector:
     matchLabels:
-      app: nginxingress-deployment-pod
+      app: nginxingress-daemonset-pod
   template:
     metadata:
       namespace: nginxingress-namespace
       labels:
-        app: nginxingress-deployment-pod
+        app: nginxingress-daemonset-pod
     spec:
       serviceAccountName: nginxingress-serviceaccount
+      terminationGracePeriodSeconds: 15
       containers:
       - image: nginx/nginx-ingress:alpine
-        name: nginxingress-deployment-pod
+        name: nginxingress-daemonset-pod
         ports:
         - name: http
           containerPort: 80

@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginxingress-service
+  namespace: nginxingress-namespace
+spec:
+  externalTrafficPolicy: Local
+  type: LoadBalancer
+  selector:
+    app: nginxingress-daemonset-pod
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 443
+    protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-app-one-service
+  namespace: nginxingress-namespace
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: test-app-one-service
+  namespace: nginxingress-namespace
+subsets:
+- addresses:
+  - ip: 10.245.178.95 # See README on how to acquire correct IP
+  ports:
+  - port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-app-two-service
+  namespace: nginxingress-namespace
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: test-app-two-service
+  namespace: nginxingress-namespace
+subsets:
+- addresses:
+  - ip: 10.245.41.172 # See README on how to acquire correct IP
+  ports:
+  - port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test-app-api-service
+  namespace: nginxingress-namespace
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: test-app-api-service
+  namespace: nginxingress-namespace
+subsets:
+- addresses:
+  - ip: 10.245.89.7 # See README on how to acquire correct IP
+  ports:
+  - port: 80
