@@ -38,7 +38,8 @@ subsets:
 - addresses:
   - ip: 10.245.213.91 # See README on how to acquire correct IP
   ports:
-  - port: 80
+  - name: http
+    port: 80
 ---
 apiVersion: v1
 kind: Service
@@ -60,7 +61,8 @@ subsets:
 - addresses:
   - ip: 10.245.231.135 # See README on how to acquire correct IP
   ports:
-  - port: 80
+  - name: http
+    port: 80
 ---
 apiVersion: v1
 kind: Service
@@ -82,4 +84,5 @@ subsets:
 - addresses:
   - ip: 10.245.180.64 # See README on how to acquire correct IP
   ports:
-  - port: 80
+  - name: http
+    port: 80
