@@ -4,6 +4,7 @@ metadata:
   name: testapptwo-service
   namespace: testapptwo-namespace
 spec:
+  clusterIP: 10.245.231.135 # designated IP for matching examples
   selector:
     app: testapptwo
   ports:

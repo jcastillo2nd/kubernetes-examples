@@ -36,7 +36,7 @@ metadata:
   namespace: nginxingress-namespace
 subsets:
 - addresses:
-  - ip: 10.245.178.95 # See README on how to acquire correct IP
+  - ip: 10.245.213.91 # See README on how to acquire correct IP
   ports:
   - port: 80
 ---
@@ -58,7 +58,7 @@ metadata:
   namespace: nginxingress-namespace
 subsets:
 - addresses:
-  - ip: 10.245.41.172 # See README on how to acquire correct IP
+  - ip: 10.245.231.135 # See README on how to acquire correct IP
   ports:
   - port: 80
 ---
@@ -80,6 +80,6 @@ metadata:
   namespace: nginxingress-namespace
 subsets:
 - addresses:
-  - ip: 10.245.89.7 # See README on how to acquire correct IP
+  - ip: 10.245.180.64 # See README on how to acquire correct IP
   ports:
   - port: 80

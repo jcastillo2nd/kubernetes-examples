@@ -4,6 +4,7 @@ metadata:
   name: testappapi-service
   namespace: testappapi-namespace
 spec:
+  clusterIP: 10.245.180.64 # designated IP for matching examples
   selector:
     app: testappapi
   ports:

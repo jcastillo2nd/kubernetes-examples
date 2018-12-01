@@ -4,6 +4,7 @@ metadata:
   name: testappone-service
   namespace: testappone-namespace
 spec:
+  clusterIP: 10.245.213.91 # designated IP for matching examples
   selector:
     app: testappone
   ports:
