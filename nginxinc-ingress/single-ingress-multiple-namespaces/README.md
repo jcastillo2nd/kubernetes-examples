@@ -5,19 +5,28 @@ routes to applications in other namespaces.
 
 ## Things to consider ##
 
-### Crossing namespaces requires known Cluster IP for service ###
+### Crossing namespaces requires known Cluster IP for services ###
 
 Due to the way that the ingress controller operates, it's not possible to
 create ExternalName services, as this results in the [default upstream][1]
 object which won't work as expected.
 
 This means that we have to create our app services first, then reference the
-cluster IP in an headless service with an endpoint.
+cluster IP in a headless service with an endpoint.
+
+In the example test apps, we leverage ClusterIP type Services with the
+`spec.clusterIP` set to enable us to define the Ingress consistently across the
+examples. In deployment, you would need to determine if this strategy would be
+a good fit for your deployment style and ensure that the Endpoint addresses are
+correcly set.
 
 ### Paths may require rewrites ###
 
-When using the Ingress paths, the applications may be deployed not expecting to
-handle the path. In this case, the [nginx.org/rewrites][2] annotation is used.
+When using the Ingress paths, the applications may be deployed without a
+configuration for handle the path in the request.
+
+In the examples, the [nginx.org/rewrites][2] annotation is used to rewrite the
+request to `/` so that the test apps can run unmodified.
 
 ## Objects ##
 
@@ -78,7 +87,8 @@ services. You would plug in the cluster IP into the Endpoints definitions::
     testapptwo-namespace     testapptwo-service     ClusterIP      10.245.231.135   <none>           80/TCP                       160m
 
 The CLUSTER-IP value for the testappapi-service, testappone-service and
-testapptwo-service services are used in the Endpoints
+testapptwo-service services are used in the Endpoints. For the test app
+manifests, the service `clusterIP` setting is used to keep this consistent.
 
     apiVersion: v1
     kind: Service
