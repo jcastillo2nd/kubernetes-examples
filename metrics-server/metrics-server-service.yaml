@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-server
+  namespace: kube-system
+  labels:
+    addonmanager.kubernetes.io/mode: "Reconcile"
+    kubernetes.io/cluster-service: "true"
+    kuberneteis.io/name: "Metrics-server"
+    k8s-app: metrics-server
+spec:
+  clusterIP: 10.245.0.20
+  type: ClusterIP 
+  selector:
+    k8s-app: metrics-server
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 443
